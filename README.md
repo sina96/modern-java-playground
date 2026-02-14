@@ -20,7 +20,7 @@ A collection of modern Java demos and patterns, organized into two routes:
 
 ## Project Structure
 
-```
+```text
 src/main/java/playground/
 ├── common/           # Shared infrastructure (Demo, CliMenu, Util)
 ├── modern/           # Route A: Modern Java Approaches
@@ -79,7 +79,3 @@ $ ./gradlew runModern
    ```java
    registry.register(new MyDemo());
    ```
-
-## License
-
-MIT
