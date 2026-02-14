@@ -45,8 +45,9 @@ public class CliMenu {
     }
 
     private void printDemos() {
-        for (int i = 0; i < registry.size(); i++) {
-            Demo demo = registry.demos().get(i);
+        var demos = registry.demos();
+        for (int i = 0; i < demos.size(); i++) {
+            Demo demo = demos.get(i);
             System.out.printf("  [%d] %s%n", i + 1, demo.name());
             System.out.printf("      %s%n", demo.description());
         }

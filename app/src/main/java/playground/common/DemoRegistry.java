@@ -1,6 +1,7 @@
 package playground.common;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +21,8 @@ public class DemoRegistry {
     /**
      * Registers a demo to this registry.
      */
-    public DemoRegistry register(Demo demo) {
+    public void register(Demo demo) {
         demos.add(demo);
-        return this;
     }
 
     /**
@@ -36,7 +36,7 @@ public class DemoRegistry {
      * Returns an unmodifiable list of all registered demos.
      */
     public List<Demo> demos() {
-        return List.copyOf(demos);
+        return Collections.unmodifiableList(demos);
     }
 
     /**
