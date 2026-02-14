@@ -22,13 +22,9 @@ public class ModernMain implements Demo {
 
     private void registerDemos() {
         // Demos will be registered here as they are implemented
-        // Example:
-        // registry.register(new DomainModelDemo());
-        // registry.register(new ResultDemo());
-        
-        // Placeholder demo to verify setup works
         registry.register(new SetupVerificationDemo());
         registry.register(new DomainModelDemo());
+        // Add more demos here as they are implemented
     }
 
     @Override
