@@ -102,7 +102,7 @@ public final class Util {
      * Returns a random long between min and max.
      */
     public static long randomLong(long min, long max) {
-        return min + RANDOM.nextLong() * (max - min);
+        return RANDOM.nextLong(min, max + 1);
     }
 
     /**
@@ -110,6 +110,9 @@ public final class Util {
      */
     @SafeVarargs
     public static <T> T randomOf(T... elements) {
+        if (elements.length == 0) {
+            throw new IllegalArgumentException("Cannot pick a random element from an empty array.");
+        }
         return elements[RANDOM.nextInt(elements.length)];
     }
 

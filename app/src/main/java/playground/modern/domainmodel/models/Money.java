@@ -5,7 +5,7 @@ public record Money(String currency, long minorUnits)
 
    public Money
    {
-      if (currency.length() != 3 && currency.equals(currency.toUpperCase()))
+      if (currency.length() != 3 || !currency.equals(currency.toUpperCase()))
          throw new IllegalArgumentException("Invalid currency code: " + currency);
       if (minorUnits < 0)
          throw new IllegalArgumentException("Negative amount: " + minorUnits);

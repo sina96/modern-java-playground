@@ -1,6 +1,7 @@
 package playground.modern.domainmodel.models;
 
 import java.time.Instant;
+import java.util.Objects;
 
 
 public record CardPayment(String id, Money amount, String customerId, Instant createdAt,
@@ -9,6 +10,10 @@ public record CardPayment(String id, Money amount, String customerId, Instant cr
 
    public CardPayment
    {
+      Objects.requireNonNull(amount);
+      Objects.requireNonNull(customerId);
+      Objects.requireNonNull(maskedPan);
+      Objects.requireNonNull(authCode);
       if(!maskedPan.contains("*") || authCode.isBlank())
          throw new IllegalArgumentException("Invalid card payment: maskedPan=" + maskedPan + ", authCode=" + authCode);
    }

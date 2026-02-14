@@ -49,7 +49,7 @@ Benefits:
 ```java
 String process(Payment payment) {
     return switch (payment) {
-        case CardPayment c -> "Card ending in " + c.cardNumber().slice(-4);
+        case CardPayment c -> "Card ending in " + c.cardNumber().substring(c.cardNumber().length() - 4);
         case BankTransfer b -> "IBAN: " + b.iban();
         case CryptoPayment x -> "Crypto: " + x.walletAddress();
     };
