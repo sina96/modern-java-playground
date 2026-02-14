@@ -33,8 +33,24 @@ java {
 }
 
 application {
-    // Define the main class for the application.
-    mainClass = "org.example.App"
+    // Default main class (can be overridden with -Pmain=...)
+    mainClass = project.findProperty("main") as String? ?: "playground.modern.ModernMain"
+}
+
+// Task to run the Modern (Route A) main class
+tasks.register<JavaExec>("runModern") {
+    group = "application"
+    description = "Run the Modern Java Approaches demo (Route A)"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("playground.modern.ModernMain")
+}
+
+// Task to run the JDK25 (Route B) main class
+tasks.register<JavaExec>("runJdk25") {
+    group = "application"
+    description = "Run the Java 25 Features demo (Route B)"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("playground.jdk25.Jdk25Main")
 }
 
 tasks.named<Test>("test") {
