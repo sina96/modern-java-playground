@@ -24,7 +24,7 @@ The Result type is a container that represents either a **success** value (`T`) 
 
 ## File Structure
 
-```
+```text
 result/
 ├── models/
 │   ├── Result.java       # Core sealed interface with transformation methods
@@ -67,9 +67,9 @@ result/
 Result<CustomerProfile, DomainError> profile = 
     parseInt("age", input)
         .flatMap(age -> validateRange("age", age, 18, 120))
-        .flatMap(validAge -> parseInt("salary", input))
-        .flatMap(salary -> validateMin("salary", salary, 0))
-        .map(validated -> new CustomerProfile(validated.age, validated.salary));
+        .flatMap(validAge -> parseInt("salary", input)
+            .flatMap(salary -> validateMin("salary", salary, 0))
+            .map(validSalary -> new CustomerProfile(validAge, validSalary)));
 
 // Handle result
 String message = profile.fold(

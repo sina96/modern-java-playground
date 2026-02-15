@@ -70,8 +70,15 @@ public class CliMenu {
     }
 
     private void readAnyChoice() {
+
         System.out.printf("%nPress enter key for main menu...%n");
-        scanner.nextLine();
+        try
+        {
+            scanner.nextLine();
+        }catch (NoSuchElementException e)
+        {
+            // No input available (non-interactive)
+        }
     }
 
     private boolean handleChoice(int choice) {
