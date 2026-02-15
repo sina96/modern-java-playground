@@ -5,6 +5,7 @@ import playground.common.Demo;
 import playground.common.DemoRegistry;
 import playground.common.Util;
 import playground.modern.domainmodel.DomainModelDemo;
+import playground.modern.result.ResultDemo;
 
 
 /**
@@ -24,6 +25,7 @@ public class ModernMain implements Demo {
         // Demos will be registered here as they are implemented
         registry.register(new SetupVerificationDemo());
         registry.register(new DomainModelDemo());
+        registry.register(new ResultDemo());
         // Add more demos here as they are implemented
     }
 
