@@ -69,6 +69,11 @@ public class CliMenu {
         }
     }
 
+    private void readAnyChoice() {
+        System.out.printf("%nPress enter key for main menu...%n");
+        scanner.nextLine();
+    }
+
     private boolean handleChoice(int choice) {
         if (choice == 0) {
             System.out.println("  Goodbye!");
@@ -92,6 +97,7 @@ public class CliMenu {
         System.out.println("───────────────────────────────────────────────────────────────");
         try {
             demo.run();
+            readAnyChoice();
         } catch (Exception e) {
             System.err.println("  Error running demo: " + e.getMessage());
             e.printStackTrace();
