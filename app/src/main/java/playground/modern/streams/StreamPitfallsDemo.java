@@ -79,7 +79,7 @@ public final class StreamPitfallsDemo implements Demo
 
       // BAD: mutating external state in a stream pipeline
       List<String> ids = new ArrayList<>();
-      txs.forEach(t -> ids.add(t.id())); // works here, but it's a bad habit
+      txs.stream().forEach(t -> ids.add(t.id())); // works here, but it's a bad habit
 
       // GOOD: collect results via stream terminal ops
       List<String> safeIds = txs.stream().map(Transaction::id).toList();

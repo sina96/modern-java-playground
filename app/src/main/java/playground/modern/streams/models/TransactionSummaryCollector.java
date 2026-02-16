@@ -19,8 +19,8 @@ public class TransactionSummaryCollector implements Collector<Transaction, Trans
    {
       long count = 0;
       long total = 0;
-      long max = Long.MAX_VALUE;
-      long min = Long.MIN_VALUE;
+      long min = Long.MAX_VALUE;
+      long max = Long.MIN_VALUE;
 
       final EnumMap<Transaction.Category, Long> countByCategory = new EnumMap<>(Transaction.Category.class);
 

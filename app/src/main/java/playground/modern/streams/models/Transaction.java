@@ -14,7 +14,6 @@ public record Transaction (String id, String customerId, String merchant,
       Objects.requireNonNull(customerId);
       Objects.requireNonNull(merchant);
       Objects.requireNonNull(category);
-      Objects.requireNonNull(amountMinor);
       Objects.requireNonNull(currency);
       Objects.requireNonNull(timestamp);
 

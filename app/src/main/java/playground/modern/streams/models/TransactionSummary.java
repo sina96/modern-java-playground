@@ -10,8 +10,6 @@ public record TransactionSummary(long count, long totalAmountMinor, OptionalLong
 
    public TransactionSummary
    {
-      Objects.requireNonNull(count);
-      Objects.requireNonNull(totalAmountMinor);
       Objects.requireNonNull(maxAmountMinor);
       Objects.requireNonNull(minAmountMinor);
       Objects.requireNonNull(countByCategory);
