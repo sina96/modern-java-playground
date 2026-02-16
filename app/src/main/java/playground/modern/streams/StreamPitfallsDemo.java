@@ -96,16 +96,17 @@ public final class StreamPitfallsDemo implements Demo
    {
       System.out.println("[Pitfall 4] Parallel streams misuse");
 
-      // BAD: parallel + shared mutable state => contention and/or correctness issues
-      AtomicLong total = new AtomicLong(0);
-      txs.parallelStream().forEach(t -> total.addAndGet(t.amountMinor()));
+      // BAD (performance): parallel + shared mutable state => contention.
+      // AtomicLong is thread-safe (no lost updates), but frequent atomic updates can erase any parallel benefit.
+      AtomicLong atomicTotal = new AtomicLong(0);
+      txs.parallelStream().forEach(t -> atomicTotal.addAndGet(t.amountMinor()));
 
       // GOOD: use reduction (built-in is optimized and correct)
       long reducedTotal = txs.parallelStream().mapToLong(Transaction::amountMinor).sum();
 
-      System.out.println("atomicTotal  (parallel + contention) = " + total.get());
+      System.out.println("atomicTotal  (thread-safe, but contended) = " + atomicTotal.get());
       System.out.println("reducedTotal (parallel reduction)    = " + reducedTotal);
-      System.out.println("Note: parallel is not a default. Use it for large CPU-bound workloads and avoid shared state.");
+      System.out.println("Note: with parallel streams, prefer stateless operations/reductions and avoid shared mutable state (even if atomic).");
    }
 
    @Override
