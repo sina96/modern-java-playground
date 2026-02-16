@@ -6,6 +6,8 @@ import playground.common.DemoRegistry;
 import playground.common.Util;
 import playground.modern.domainmodel.DomainModelDemo;
 import playground.modern.result.ResultDemo;
+import playground.modern.streams.StreamPitfallsDemo;
+import playground.modern.streams.StreamsDemo;
 
 
 /**
@@ -26,6 +28,8 @@ public class ModernMain implements Demo {
         registry.register(new SetupVerificationDemo());
         registry.register(new DomainModelDemo());
         registry.register(new ResultDemo());
+        registry.register(new StreamsDemo());
+        registry.register(new StreamPitfallsDemo());
         // Add more demos here as they are implemented
     }
 
