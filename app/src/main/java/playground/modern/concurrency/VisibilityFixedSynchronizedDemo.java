@@ -30,6 +30,7 @@ public class VisibilityFixedSynchronizedDemo implements Demo
       return "Demonstrates how synchronized flag can be used to ensure visibility and ordering guarantees";
    }
 
+   @Override
    public void run() {
       Harness.header("VisibilityFixedSynchronizedDemo (synchronized accessors)");
 
