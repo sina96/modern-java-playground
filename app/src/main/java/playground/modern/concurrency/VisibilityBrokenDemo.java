@@ -4,7 +4,6 @@ import playground.common.Demo;
 import playground.modern.concurrency.util.Harness;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Demonstrates a classic visibility issue:
@@ -81,7 +80,7 @@ public class VisibilityBrokenDemo implements Demo
       worker.start();
 
       // Ensure worker started
-      await(started, 50);
+      Harness.await(started, 50);
 
       // Give it a brief moment to get into the loop
       Harness.sleep(5);
@@ -90,7 +89,7 @@ public class VisibilityBrokenDemo implements Demo
       running = false;
 
       // Join with timeout: if it doesn't stop, we consider it "stuck" for this attempt.
-      boolean stopped = join(worker, SPIN_TIMEOUT_MS);
+      boolean stopped = Harness.join(worker, SPIN_TIMEOUT_MS);
 
       System.out.println("Attempt " + attempt + ": " + (stopped ? "STOPPED" : "STUCK (visibility issue)"));
 
@@ -103,21 +102,4 @@ public class VisibilityBrokenDemo implements Demo
       return stopped;
    }
 
-   private static boolean join(Thread t, long timeoutMs) {
-      try {
-         t.join(timeoutMs);
-         return !t.isAlive();
-      } catch (InterruptedException ie) {
-         Thread.currentThread().interrupt();
-         return false;
-      }
-   }
-
-   private static void await(CountDownLatch latch, long timeoutMs) {
-      try {
-         latch.await(timeoutMs, TimeUnit.MILLISECONDS);
-      } catch (InterruptedException ie) {
-         Thread.currentThread().interrupt();
-      }
-   }
 }

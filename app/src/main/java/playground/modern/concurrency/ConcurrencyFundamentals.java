@@ -15,7 +15,7 @@ public class ConcurrencyFundamentals implements Demo
    @Override
    public String description()
    {
-      return "Concurrency fundamentals??";
+      return "Core Java concurrency concepts: visibility, happens-before, atomicity, and contention";
    }
 
    @Override

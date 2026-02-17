@@ -64,7 +64,7 @@ public class CounterComparisonDemo implements Demo
          int incrementsPerThread,
          long expected
    ) {
-      long elapsedMs = Harness.timeMilis(() -> runThreads(counter, threads, incrementsPerThread));
+      long elapsedMs = Harness.timeMillis(() -> runThreads(counter, threads, incrementsPerThread));
       long actual = counter.get();
       long delta = expected - actual;
 

@@ -4,7 +4,6 @@ import playground.common.Demo;
 import playground.modern.concurrency.util.Harness;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Same scenario as VisibilityBrokenDemo, but the flag is volatile.
@@ -68,31 +67,13 @@ public class VisibilityFixedVolatileDemo implements Demo
       }, "jmm-worker-volatile");
 
       worker.start();
-      await(started, 50);
+      Harness.await(started, 50);
 
       Harness.sleep(5);
       running = false;
 
-      boolean stopped = join(worker, SPIN_TIMEOUT_MS);
+      boolean stopped = Harness.join(worker, SPIN_TIMEOUT_MS);
       System.out.println("Attempt " + attempt + ": " + (stopped ? "STOPPED" : "UNEXPECTEDLY STUCK"));
       return stopped;
-   }
-
-   private static boolean join(Thread t, long timeoutMs) {
-      try {
-         t.join(timeoutMs);
-         return !t.isAlive();
-      } catch (InterruptedException ie) {
-         Thread.currentThread().interrupt();
-         return false;
-      }
-   }
-
-   private static void await(CountDownLatch latch, long timeoutMs) {
-      try {
-         latch.await(timeoutMs, TimeUnit.MILLISECONDS);
-      } catch (InterruptedException ie) {
-         Thread.currentThread().interrupt();
-      }
    }
 }

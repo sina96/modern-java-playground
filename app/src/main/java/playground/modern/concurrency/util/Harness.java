@@ -1,5 +1,8 @@
 package playground.modern.concurrency.util;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 public class Harness
 {
 
@@ -17,7 +20,7 @@ public class Harness
       }
    }
 
-   public static long timeMilis(Runnable r)
+   public static long timeMillis(Runnable r)
    {
       long start = System.currentTimeMillis();
       r.run();
@@ -29,6 +32,26 @@ public class Harness
       for (int i = 0; i < n; i++)
       {
          r.run();
+      }
+   }
+
+   public static boolean join(Thread t, long timeoutMs)
+   {
+      try {
+         t.join(timeoutMs);
+         return !t.isAlive();
+      } catch (InterruptedException ie) {
+         Thread.currentThread().interrupt();
+         return false;
+      }
+   }
+
+   public static void await(CountDownLatch latch, long timeoutMs)
+   {
+      try {
+         latch.await(timeoutMs, TimeUnit.MILLISECONDS);
+      } catch (InterruptedException ie) {
+         Thread.currentThread().interrupt();
       }
    }
 
