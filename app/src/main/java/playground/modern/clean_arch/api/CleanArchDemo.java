@@ -33,7 +33,7 @@ public class CleanArchDemo implements Demo
       // --- Manual wiring (composition root) ---
       OrderPolicy policy = new OrderPolicy(); // assumes default constructor
       InMemoryOrderRepository repo = new InMemoryOrderRepository();
-      FakePaymentGateway payments = new FakePaymentGateway(100_000); // approve up to SEK 1000.00 if 100 minor = 1 SEK
+      FakePaymentGateway payments = new FakePaymentGateway(5_000); // approve up to 5,000 minor units
 
       PlaceOrderUseCase useCase = new PlaceOrderUseCase(repo, payments, policy);
 
@@ -57,11 +57,11 @@ public class CleanArchDemo implements Demo
 
       System.out.println("-------------------------------------------------");
 
-      // --- Scenario 2: large order -> declined by fake gateway ---
+      // --- Scenario 2: valid by policy but declined by fake gateway ---
       PlaceOrderCommand bigCmd = new PlaceOrderCommand(
             "cust-200",
             List.of(
-                  new OrderItem("SKU-9", "Dental Chair", Money.of("SEK", 250_000), 1) // huge
+                  new OrderItem("SKU-9", "Dental Chair", Money.of("SEK", 7_500), 1)
             ),
             "tok_ok_999"
       );

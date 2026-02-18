@@ -10,6 +10,7 @@ public record OrderItem(String sku, String name, Money unitPrice, int quantity)
    {
       Objects.requireNonNull(sku);
       Objects.requireNonNull(name);
+      Objects.requireNonNull(unitPrice);
 
       if(quantity <= 0) throw new IllegalArgumentException("Quantity must be > 0");
       if(sku.isBlank()) throw new IllegalArgumentException("SKU cannot be blank");

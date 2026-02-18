@@ -18,5 +18,7 @@ public record PlaceOrderCommand(
       if (customerId.isBlank()) throw new IllegalArgumentException("customerId must not be blank");
       if (paymentToken.isBlank()) throw new IllegalArgumentException("paymentToken must not be blank");
       if (items.isEmpty()) throw new IllegalArgumentException("items must not be empty");
+
+      items = List.copyOf(items);
    }
 }

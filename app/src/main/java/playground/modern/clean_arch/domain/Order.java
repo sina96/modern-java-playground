@@ -10,33 +10,44 @@ public record Order(OrderId id, OrderStatus status, String customerId, List<Orde
    public Order
    {
       Objects.requireNonNull(id);
+      Objects.requireNonNull(status);
+      Objects.requireNonNull(customerId);
       Objects.requireNonNull(items);
       Objects.requireNonNull(createdAt);
+      Objects.requireNonNull(totalAmount);
+
+      items = List.copyOf(items);
    }
 
    public static Order create(String customerId, List<OrderItem> items)
    {
+      Objects.requireNonNull(customerId);
+      Objects.requireNonNull(items);
+      if (items.isEmpty()) {
+         throw new IllegalArgumentException("order must contain at least one item");
+      }
+
       Money totalAmount = items.stream().map(OrderItem::lineTotal).reduce(Money::add).orElseThrow();
       return new Order(OrderId.newId(), OrderStatus.CREATED, customerId, items, Instant.now(), totalAmount);
    }
 
    public Money total()
    {
-      return items.stream().map(OrderItem::lineTotal).reduce(Money::add).orElseThrow();
+      return totalAmount;
    }
 
-   public Order MarkAsPaid(Order order)
+   public Order markAsPaid()
    {
-      return new Order(order.id, OrderStatus.PAID, order.customerId, order.items, order.createdAt, order.totalAmount);
+      return new Order(this.id, OrderStatus.PAID, this.customerId, this.items, this.createdAt, this.totalAmount);
    }
 
-   public Order MarkAsRejected(Order order)
+   public Order markAsRejected()
    {
-      return new Order(order.id, OrderStatus.REJECTED, order.customerId, order.items, order.createdAt, order.totalAmount);
+      return new Order(this.id, OrderStatus.REJECTED, this.customerId, this.items, this.createdAt, this.totalAmount);
    }
 
-   public Order MarkAsPending(Order order)
+   public Order markAsPending()
    {
-      return new Order(order.id, OrderStatus.PAYMENT_PENDING, order.customerId, order.items, order.createdAt, order.totalAmount);
+      return new Order(this.id, OrderStatus.PAYMENT_PENDING, this.customerId, this.items, this.createdAt, this.totalAmount);
    }
 }

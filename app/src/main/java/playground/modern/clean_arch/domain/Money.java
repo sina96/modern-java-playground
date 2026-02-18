@@ -13,9 +13,9 @@ public record Money(String currency, long minorUnits)
       if(minorUnits < 0) throw new IllegalArgumentException("Negative amount: " + minorUnits);
    }
 
-   public static Money of(String sek, int i)
+   public static Money of(String currency, int minorUnits)
    {
-      return new Money(sek, i /100);
+      return new Money(currency, minorUnits);
    }
 
    public Money add(Money other)

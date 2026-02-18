@@ -1,12 +1,9 @@
 package playground.modern.clean_arch.application;
 
 import playground.modern.clean_arch.domain.Order;
-import playground.modern.clean_arch.domain.OrderId;
 import playground.modern.clean_arch.domain.OrderPolicy;
 
-import java.time.Instant;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class PlaceOrderUseCase {
 
@@ -31,9 +28,9 @@ public final class PlaceOrderUseCase {
       Order created = Order.create(cmd.customerId(), cmd.items());
 
       // 2) Domain policy validation
-      boolean violation = policy.validate(created);
-      if (!violation) {
-         Order rejected = created.MarkAsRejected(created);
+      boolean isValid = policy.validate(created);
+      if (!isValid) {
+         Order rejected = created.markAsRejected();
          orderRepository.save(rejected);
 
          return new PlaceOrderResult(
@@ -43,18 +40,21 @@ public final class PlaceOrderUseCase {
          );
       }
 
-      // 3) Charge payment (port)
-      PaymentResult payment = paymentGateway.charge(created.customerId(), created.total(), cmd.paymentToken());
+      // 3) Move to pending before charging
+      Order pending = created.markAsPending();
 
-      // 4) Transition state based on payment outcome
+      // 4) Charge payment (port)
+      PaymentResult payment = paymentGateway.charge(pending.customerId(), pending.totalAmount(), cmd.paymentToken());
+
+      // 5) Transition state based on payment outcome
       Order finalOrder = payment.approved()
-            ? created.MarkAsPaid(created)
-            : created.MarkAsRejected(created);
+            ? pending.markAsPaid()
+            : pending.markAsRejected();
 
-      // 5) Persist (port)
+      // 6) Persist (port)
       orderRepository.save(finalOrder);
 
-      // 6) Return response DTO
+      // 7) Return response DTO
       String msg = payment.approved()
             ? "Order paid. providerRef=" + payment.providerRef()
             : "Order rejected. reason=" + payment.message();
