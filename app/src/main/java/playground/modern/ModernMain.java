@@ -4,6 +4,7 @@ import playground.common.CliMenu;
 import playground.common.Demo;
 import playground.common.DemoRegistry;
 import playground.common.Util;
+import playground.modern.clean_arch.api.CleanArchDemo;
 import playground.modern.concurrency.ConcurrencyFundamentals;
 import playground.modern.domainmodel.DomainModelDemo;
 import playground.modern.result.ResultDemo;
@@ -32,6 +33,7 @@ public class ModernMain implements Demo {
         registry.register(new StreamsDemo());
         registry.register(new StreamPitfallsDemo());
         registry.register(new ConcurrencyFundamentals());
+        registry.register(new CleanArchDemo());
         // Add more demos here as they are implemented
     }
 
